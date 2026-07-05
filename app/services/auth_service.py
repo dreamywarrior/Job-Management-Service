@@ -14,7 +14,9 @@ def create_user(db: Session, user: UserCreate):
     existing_user = get_user_by_email(db, user.email)
 
     if existing_user:
-        raise ValueError("Email already registered")
+        raise ValueError(
+            "An account with this email address already exists. Please log in or use a different email."
+        )
 
     hashed_password = password_hash.hash(user.password)
 

@@ -4,6 +4,8 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.auth import require_login
+
 from app.schemas.job import JobCreate
 
 from app.services.job_service import (
@@ -16,21 +18,21 @@ from app.services.job_service import (
 
 router = APIRouter(prefix="/jobs")
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(
+    directory="app/templates"
+)
 
-
-# ---------------------------------------------------
+# =====================================================
 # Add Job Page
-# ---------------------------------------------------
+# =====================================================
 
 @router.get("/add")
 def add_job_page(request: Request):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
-        )
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
 
     return templates.TemplateResponse(
         request=request,
@@ -41,9 +43,9 @@ def add_job_page(request: Request):
     )
 
 
-# ---------------------------------------------------
+# =====================================================
 # Save Job
-# ---------------------------------------------------
+# =====================================================
 
 @router.post("/add")
 def add_job(
@@ -71,6 +73,11 @@ def add_job(
 
     db: Session = Depends(get_db)
 ):
+
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
 
     job = JobCreate(
 
@@ -102,14 +109,14 @@ def add_job(
     )
 
     return RedirectResponse(
-        url="/jobs",
+        url="/jobs?success=Job+added+successfully",
         status_code=303
     )
 
 
-# ---------------------------------------------------
+# =====================================================
 # My Jobs
-# ---------------------------------------------------
+# =====================================================
 
 @router.get("")
 def my_jobs(
@@ -117,11 +124,10 @@ def my_jobs(
     db: Session = Depends(get_db)
 ):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
-        )
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
 
     jobs = get_all_jobs(
         db,
@@ -138,9 +144,9 @@ def my_jobs(
     )
 
 
-# ---------------------------------------------------
+# =====================================================
 # Job Details
-# ---------------------------------------------------
+# =====================================================
 
 @router.get("/{job_id}")
 def view_job(
@@ -149,11 +155,10 @@ def view_job(
     db: Session = Depends(get_db)
 ):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
-        )
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
 
     job = get_job_by_id(
         db,
@@ -162,9 +167,15 @@ def view_job(
     )
 
     if job is None:
-        return RedirectResponse(
-            url="/jobs",
-            status_code=303
+
+        return templates.TemplateResponse(
+            request=request,
+            name="errors/404.html",
+            context={
+                "title": "Job Not Found",
+                "message": "The requested job could not be found."
+            },
+            status_code=404
         )
 
     return templates.TemplateResponse(
@@ -176,10 +187,9 @@ def view_job(
         }
     )
 
-
-# ---------------------------------------------------
+# =====================================================
 # Edit Job Page
-# ---------------------------------------------------
+# =====================================================
 
 @router.get("/{job_id}/edit")
 def edit_job_page(
@@ -188,11 +198,10 @@ def edit_job_page(
     db: Session = Depends(get_db)
 ):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
-        )
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
 
     job = get_job_by_id(
         db,
@@ -201,9 +210,15 @@ def edit_job_page(
     )
 
     if job is None:
-        return RedirectResponse(
-            url="/jobs",
-            status_code=303
+
+        return templates.TemplateResponse(
+            request=request,
+            name="errors/404.html",
+            context={
+                "title": "Job Not Found",
+                "message": "The requested job does not exist or you do not have permission to edit it."
+            },
+            status_code=404
         )
 
     return templates.TemplateResponse(
@@ -216,9 +231,9 @@ def edit_job_page(
     )
 
 
-# ---------------------------------------------------
+# =====================================================
 # Update Job
-# ---------------------------------------------------
+# =====================================================
 
 @router.post("/{job_id}/edit")
 def edit_job(
@@ -248,6 +263,11 @@ def edit_job(
     db: Session = Depends(get_db)
 ):
 
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
+
     db_job = get_job_by_id(
         db,
         job_id,
@@ -255,13 +275,18 @@ def edit_job(
     )
 
     if db_job is None:
-        return RedirectResponse(
-            url="/jobs",
-            status_code=303
+
+        return templates.TemplateResponse(
+            request=request,
+            name="errors/404.html",
+            context={
+                "title": "Job Not Found",
+                "message": "Unable to update the selected job."
+            },
+            status_code=404
         )
 
-    job = JobCreate(
-
+    updated_job = JobCreate(
         title=title,
         company=company,
         location=location,
@@ -271,11 +296,9 @@ def edit_job(
         description=description,
         requirements=requirements,
         benefits=benefits,
-
         telecommuting=telecommuting,
         has_company_logo=has_company_logo,
         has_questions=has_questions,
-
         employment_type=employment_type,
         required_experience=required_experience,
         required_education=required_education,
@@ -284,20 +307,20 @@ def edit_job(
     )
 
     update_job(
-        db,
-        db_job,
-        job
+        db=db,
+        db_job=db_job,
+        job=updated_job
     )
 
     return RedirectResponse(
-        url="/jobs",
+        url="/jobs?success=Job+updated+successfully",
         status_code=303
     )
 
 
-# ---------------------------------------------------
+# =====================================================
 # Delete Job
-# ---------------------------------------------------
+# =====================================================
 
 @router.get("/{job_id}/delete")
 def delete_job(
@@ -306,10 +329,27 @@ def delete_job(
     db: Session = Depends(get_db)
 ):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
+
+    job = get_job_by_id(
+        db,
+        job_id,
+        request.session["user_id"]
+    )
+
+    if job is None:
+
+        return templates.TemplateResponse(
+            request=request,
+            name="errors/404.html",
+            context={
+                "title": "Job Not Found",
+                "message": "The requested job does not exist or has already been deleted."
+            },
+            status_code=404
         )
 
     delete_job_by_id(
@@ -319,6 +359,6 @@ def delete_job(
     )
 
     return RedirectResponse(
-        url="/jobs",
+        url="/jobs?success=Job+deleted+successfully",
         status_code=303
     )

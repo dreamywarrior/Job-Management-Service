@@ -23,7 +23,8 @@ class PredictionResult(Base):
 
     job_id: Mapped[int] = mapped_column(
         ForeignKey("jobs.id"),
-        nullable=False
+        nullable=False,
+        unique=True
     )
 
     prediction: Mapped[str] = mapped_column(
@@ -43,5 +44,5 @@ class PredictionResult(Base):
 
     job = relationship(
         "Job",
-        back_populates="predictions"
+        back_populates="prediction_result"
     )

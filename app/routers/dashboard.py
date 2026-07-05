@@ -1,14 +1,16 @@
 from fastapi import APIRouter, Request, Depends
-from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
+from app.core.auth import require_login
 from app.core.database import get_db
 from app.services.dashboard_service import get_dashboard_stats
 
 router = APIRouter()
 
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(
+    directory="app/templates"
+)
 
 
 @router.get("/dashboard")
@@ -17,16 +19,27 @@ def dashboard(
     db: Session = Depends(get_db)
 ):
 
-    if not request.session.get("logged_in"):
-        return RedirectResponse(
-            url="/auth/login",
-            status_code=303
-        )
+    # ---------------------------------------
+    # Login Required
+    # ---------------------------------------
+
+    login_redirect = require_login(request)
+
+    if login_redirect:
+        return login_redirect
+
+    # ---------------------------------------
+    # Dashboard Statistics
+    # ---------------------------------------
 
     stats = get_dashboard_stats(
         db,
         request.session["user_id"]
     )
+
+    # ---------------------------------------
+    # Render Dashboard
+    # ---------------------------------------
 
     return templates.TemplateResponse(
         request=request,

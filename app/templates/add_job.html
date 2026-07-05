@@ -2,318 +2,503 @@
 
 {% block content %}
 
-<div class="container mt-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <h2 class="mb-4">
-        Add New Job
-    </h2>
+    <div>
 
-    <form action="/jobs/add" method="post">
+        <h2 class="fw-bold">
 
-        <!-- ================= BASIC INFORMATION ================= -->
+            <i class="bi bi-plus-circle-fill text-success"></i>
 
-        <div class="card shadow mb-4">
+            Create New Job
 
-            <div class="card-header bg-primary text-white">
+        </h2>
 
-                <h5 class="mb-0">Basic Information</h5>
+        <p class="text-muted mb-0">
 
-            </div>
+            Fill in the details below to create a new job posting.
 
-            <div class="card-body">
+        </p>
 
-                <div class="row">
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Job Title</label>
-
-                        <input
-                            class="form-control"
-                            name="title"
-                            required>
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Company</label>
-
-                        <input
-                            class="form-control"
-                            name="company"
-                            required>
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Location</label>
-
-                        <input
-                            class="form-control"
-                            name="location">
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Department</label>
-
-                        <input
-                            class="form-control"
-                            name="department">
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Industry</label>
-
-                        <input
-                            class="form-control"
-                            name="industry">
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Function</label>
-
-                        <input
-                            class="form-control"
-                            name="function">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ================= EMPLOYMENT DETAILS ================= -->
-
-        <div class="card shadow mb-4">
-
-            <div class="card-header bg-success text-white">
-
-                <h5 class="mb-0">Employment Details</h5>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="row">
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Employment Type</label>
-
-                        <select
-                            class="form-select"
-                            name="employment_type">
-
-                            <option>Full-time</option>
-                            <option>Part-time</option>
-                            <option>Contract</option>
-                            <option>Temporary</option>
-                            <option>Internship</option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Salary Range</label>
-
-                        <input
-                            class="form-control"
-                            name="salary_range">
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Required Experience</label>
-
-                        <input
-                            class="form-control"
-                            name="required_experience">
-
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-
-                        <label class="form-label">Required Education</label>
-
-                        <input
-                            class="form-control"
-                            name="required_education">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ================= JOB DESCRIPTION ================= -->
-
-        <div class="card shadow mb-4">
-
-            <div class="card-header bg-info text-white">
-
-                <h5 class="mb-0">Job Description</h5>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Company Profile
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        rows="3"
-                        name="company_profile"></textarea>
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Job Description
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        rows="6"
-                        name="description"
-                        required></textarea>
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Requirements
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        rows="5"
-                        name="requirements"></textarea>
-
-                </div>
-
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Benefits
-                    </label>
-
-                    <textarea
-                        class="form-control"
-                        rows="4"
-                        name="benefits"></textarea>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ================= ADDITIONAL DETAILS ================= -->
-
-        <div class="card shadow mb-4">
-
-            <div class="card-header bg-secondary text-white">
-
-                <h5 class="mb-0">Additional Information</h5>
-
-            </div>
-
-            <div class="card-body">
-
-                <div class="form-check mb-3">
-
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="true"
-                        name="telecommuting">
-
-                    <label class="form-check-label">
-
-                        Remote / Telecommuting Available
-
-                    </label>
-
-                </div>
-
-                <div class="form-check mb-3">
-
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="true"
-                        name="has_company_logo">
-
-                    <label class="form-check-label">
-
-                        Company Logo Available
-
-                    </label>
-
-                </div>
-
-                <div class="form-check">
-
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value="true"
-                        name="has_questions">
-
-                    <label class="form-check-label">
-
-                        Includes Screening Questions
-
-                    </label>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="text-end">
-
-            <button
-                class="btn btn-success btn-lg">
-
-                Save Job
-
-            </button>
-
-            <a
-                href="/jobs"
-                class="btn btn-secondary btn-lg">
-
-                Cancel
-
-            </a>
-
-        </div>
-
-    </form>
+    </div>
 
 </div>
 
+<form id="jobForm" action="/jobs/add" method="post">
+
+<!-- ================= BASIC INFORMATION ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h5 class="mb-0">
+
+<i class="bi bi-info-circle-fill"></i>
+
+Basic Information
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Job Title <span class="text-danger">*</span>
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="title"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Company <span class="text-danger">*</span>
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="company"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Location
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="location">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Department
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="department">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Industry
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="industry">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Function
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="function">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= EMPLOYMENT ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-success text-white">
+
+<h5 class="mb-0">
+
+<i class="bi bi-briefcase-fill"></i>
+
+Employment Details
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Employment Type
+
+</label>
+
+<select
+class="form-select"
+name="employment_type">
+
+<option>Full-time</option>
+
+<option>Part-time</option>
+
+<option>Contract</option>
+
+<option>Temporary</option>
+
+<option>Internship</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Salary Range
+
+</label>
+
+<input
+type="text"
+class="form-control"
+placeholder="50000-70000"
+name="salary_range">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Required Experience
+
+</label>
+
+<input
+class="form-control"
+name="required_experience">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Required Education
+
+</label>
+
+<input
+class="form-control"
+name="required_education">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= COMPANY ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-dark text-white">
+
+<h5>
+
+<i class="bi bi-building-fill"></i>
+
+Company Information
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<label>
+
+Company Profile
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="company_profile"></textarea>
+
+</div>
+
+</div>
+
+<!-- ================= JOB DESCRIPTION ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-info text-white">
+
+<h5>
+
+<i class="bi bi-card-text"></i>
+
+Job Description
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="mb-3">
+
+<label>
+
+Description <span class="text-danger">*</span>
+
+</label>
+
+<textarea
+rows="6"
+class="form-control"
+name="description"
+required></textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Requirements
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="requirements"></textarea>
+
+</div>
+
+<div>
+
+<label>
+
+Benefits
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="benefits"></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= ADDITIONAL ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-secondary text-white">
+
+<h5>
+
+<i class="bi bi-sliders"></i>
+
+Additional Details
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="form-check mb-3">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="telecommuting"
+value="true">
+
+<label class="form-check-label">
+
+Remote / Telecommuting Available
+
+</label>
+
+</div>
+
+<div class="form-check mb-3">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="has_company_logo"
+value="true">
+
+<label class="form-check-label">
+
+Company Logo Available
+
+</label>
+
+</div>
+
+<div class="form-check">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="has_questions"
+value="true">
+
+<label class="form-check-label">
+
+Screening Questions Included
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= BUTTONS ================= -->
+
+<div class="card shadow sticky-bottom mb-3">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-end gap-3">
+
+<a
+href="/jobs"
+class="btn btn-secondary">
+
+<i class="bi bi-arrow-left"></i>
+
+Cancel
+
+</a>
+
+<button
+class="btn btn-success px-5">
+
+<i class="bi bi-check-circle-fill"></i>
+
+Save Job
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+
 {% endblock %}
+
+<script>
+
+document
+.getElementById("jobForm")
+.addEventListener(
+"submit",
+function(e){
+
+let valid=true;
+
+valid &= validateRequired(
+document.getElementsByName("title")[0],
+"Job Title"
+);
+
+valid &= validateMinLength(
+document.getElementsByName("title")[0],
+5
+);
+
+valid &= validateRequired(
+document.getElementsByName("company")[0],
+"Company"
+);
+
+valid &= validateRequired(
+document.getElementsByName("description")[0],
+"Description"
+);
+
+valid &= validateMinLength(
+document.getElementsByName("description")[0],
+50
+);
+
+valid &= validateSalary(
+document.getElementsByName("salary_range")[0]
+);
+
+if(!valid){
+
+e.preventDefault();
+
+return;
+
+}
+
+disableSubmit(
+document.querySelector("button[type='submit']")
+);
+
+});
+
+</script>

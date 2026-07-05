@@ -96,8 +96,9 @@ class Job(Base):
         back_populates="jobs"
     )
 
-    predictions = relationship(
+    prediction_result = relationship(
         "PredictionResult",
         back_populates="job",
+        uselist=False,
         cascade="all, delete-orphan"
     )

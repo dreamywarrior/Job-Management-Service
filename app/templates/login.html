@@ -46,6 +46,7 @@
                             type="password"
                             class="form-control"
                             name="password"
+                            minlength="8"
                             required>
 
                     </div>
@@ -79,5 +80,32 @@
     </div>
 
 </div>
+
+<script>
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+    let valid = true;
+
+    const email = document.getElementsByName("email")[0];
+    const password = document.getElementsByName("password")[0];
+
+    valid = validateEmail(email) && valid;
+
+    valid = validatePassword(password) && valid;
+
+    if(!valid){
+
+        e.preventDefault();
+
+        return;
+
+    }
+
+    disableSubmit(document.querySelector("button[type='submit']"));
+
+});
+
+</script>
 
 {% endblock %}

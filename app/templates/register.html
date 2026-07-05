@@ -17,12 +17,34 @@
             <div class="card-body">
 
                 {% if error %}
+
                 <div class="alert alert-danger">
+
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+
                     {{ error }}
+
+                    {% if "already exists" in error.lower() %}
+
+                    <hr>
+
+                    <a
+                        href="/auth/login"
+                        class="btn btn-outline-primary btn-sm">
+
+                        <i class="bi bi-box-arrow-in-right"></i>
+
+                        Login Instead
+
+                    </a>
+
+                    {% endif %}
+
                 </div>
+
                 {% endif %}
 
-                <form method="post">
+                <form id="registerForm" method="post" action="/auth/register">
 
                     <div class="mb-3">
 
@@ -31,6 +53,7 @@
                         <input
                             class="form-control"
                             name="full_name"
+                            value="{{ full_name or '' }}"
                             required>
 
                     </div>
@@ -43,6 +66,7 @@
                             class="form-control"
                             type="email"
                             name="email"
+                            value="{{ email or '' }}"
                             required>
 
                     </div>
@@ -56,6 +80,26 @@
                             type="password"
                             name="password"
                             required>
+
+                        <div class="form-text">
+
+                            Password must contain:
+
+                            <ul class="mb-0">
+
+                            <li>Minimum 8 characters</li>
+
+                            <li>One uppercase letter</li>
+
+                            <li>One lowercase letter</li>
+
+                            <li>One number</li>
+
+                            <li>One special character</li>
+
+                            </ul>
+
+                        </div>
 
                     </div>
 
@@ -87,5 +131,38 @@
     </a>
 
 </p>
+
+<script>
+
+document.getElementById("registerForm").addEventListener("submit", function(e){
+
+    let valid = true;
+
+    const name = document.getElementsByName("full_name")[0];
+    const email = document.getElementsByName("email")[0];
+    const password = document.getElementsByName("password")[0];
+    const confirmPassword = document.getElementsByName("confirm_password")[0];
+
+    valid = validateRequired(name,"Name") && valid;
+
+    valid = validateEmail(email) && valid;
+
+    valid = validatePassword(password) && valid;
+
+    valid = validatePasswordMatch(password,confirmPassword) && valid;
+
+    if(!valid){
+
+        e.preventDefault();
+
+        return;
+
+    }
+
+    disableSubmit(document.querySelector("button[type='submit']"));
+
+});
+
+</script>
 
 {% endblock %}
