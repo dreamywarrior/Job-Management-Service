@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Job Details</h2>
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <tr>
+                <th width="30%">Title</th>
+                <td>{{ job.title }}</td>
+            </tr>
+
+            <tr>
+                <th>Company</th>
+                <td>{{ job.company }}</td>
+            </tr>
+
+            <tr>
+                <th>Location</th>
+                <td>{{ job.location }}</td>
+            </tr>
+
+            <tr>
+                <th>Employment Type</th>
+                <td>{{ job.employment_type }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ job.description }}</td>
+            </tr>
+
+            <tr>
+                <th>Requirements</th>
+                <td>{{ job.requirements }}</td>
+            </tr>
+
+        </table>
+
+        <a
+            href="/jobs"
+            class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+
+        <a
+            href="/prediction/{{ job.id }}"
+            class="btn btn-success">
+
+            Verify Job
+
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

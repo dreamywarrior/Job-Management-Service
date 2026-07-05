@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Welcome, {{ request.session.get('user_name') }}
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Total Jobs</h5>
+
+                    <h2>{{ total_jobs }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Predictions</h5>
+
+                    <h2>{{ total_predictions }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Fake Jobs</h5>
+
+                    <h2>{{ fake_jobs }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header">
+
+            Quick Actions
+
+        </div>
+
+        <div class="card-body">
+
+            <a href="/jobs/add" class="btn btn-success me-2">
+                Add New Job
+            </a>
+
+            <a href="/jobs" class="btn btn-primary me-2">
+                My Jobs
+            </a>
+
+            <a href="#" class="btn btn-secondary">
+                Prediction History
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow mt-4">
+
+        <div class="card-header">
+
+            Recent Jobs
+
+        </div>
+
+        <div class="card-body">
+
+            {% if recent_jobs %}
+
+                <ul class="list-group">
+
+                    {% for job in recent_jobs %}
+
+                    <li class="list-group-item">
+
+                        <strong>{{ job.title }}</strong>
+
+                        <br>
+
+                        {{ job.company }}
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            {% else %}
+
+                <p>No jobs uploaded yet.</p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

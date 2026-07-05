@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+jinja2
+python-multipart
+httpx
+pydantic
+pytest
+passlib[bcrypt]
+email-validator
+pwdlib
+pwdlib[argon2]
+httpx
+itsdangerous
