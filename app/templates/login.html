@@ -42,12 +42,26 @@
                             Password
                         </label>
 
-                        <input
-                            type="password"
-                            class="form-control"
-                            name="password"
-                            minlength="8"
-                            required>
+                        <div class="input-group">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter your password"
+                                required>
+
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="togglePassword('password', this)">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
 
                     </div>
 

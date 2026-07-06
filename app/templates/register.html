@@ -75,11 +75,25 @@
 
                         <label>Password</label>
 
-                        <input
-                            class="form-control"
-                            type="password"
-                            name="password"
-                            required>
+                        <div class="input-group">
+
+                            <input
+                                class="form-control"
+                                id="password"
+                                type="password"
+                                name="password"
+                                required>
+
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                onclick="togglePassword('password', this)">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
 
                         <div class="form-text">
 
@@ -133,6 +147,34 @@
 </p>
 
 <script>
+
+function togglePassword(inputId, button) {
+
+    const input = document.getElementById(inputId);
+
+    const icon = button.querySelector("i");
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+        icon.classList.remove("bi-eye");
+
+        icon.classList.add("bi-eye-slash");
+
+    }
+
+    else {
+
+        input.type = "password";
+
+        icon.classList.remove("bi-eye-slash");
+
+        icon.classList.add("bi-eye");
+
+    }
+
+}
 
 document.getElementById("registerForm").addEventListener("submit", function(e){
 

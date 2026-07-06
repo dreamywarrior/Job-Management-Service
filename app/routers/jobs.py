@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Request, Depends, Form
+from datetime import datetime
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -71,6 +72,9 @@ def add_job(
     industry: str = Form(""),
     function: str = Form(""),
 
+    application_deadline: str = Form(""),
+    job_link: str = Form(""),
+
     db: Session = Depends(get_db)
 ):
 
@@ -99,7 +103,15 @@ def add_job(
         required_experience=required_experience,
         required_education=required_education,
         industry=industry,
-        function=function
+        function=function,
+
+        application_deadline=(
+            datetime.fromisoformat(application_deadline)
+            if application_deadline
+            else None
+),
+
+job_link=job_link if job_link else None
     )
 
     create_job(
@@ -259,6 +271,8 @@ def edit_job(
     required_education: str = Form(""),
     industry: str = Form(""),
     function: str = Form(""),
+    application_deadline: str = Form(""),
+    job_link: str = Form(""),
 
     db: Session = Depends(get_db)
 ):
@@ -303,7 +317,15 @@ def edit_job(
         required_experience=required_experience,
         required_education=required_education,
         industry=industry,
-        function=function
+        function=function,
+
+        application_deadline=(
+            datetime.fromisoformat(application_deadline)
+            if application_deadline
+            else None
+        ),
+
+        job_link=job_link if job_link else None
     )
 
     update_job(

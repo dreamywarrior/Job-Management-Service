@@ -1,8 +1,60 @@
 from sqlalchemy.orm import Session, joinedload
+from datetime import datetime, timedelta
 
+from app.models import job
 from app.models.job import Job
 from app.schemas.job import JobCreate
 
+# ---------------------------------------------------
+# Deadline Status
+# ---------------------------------------------------
+
+def get_deadline_status(deadline):
+
+    if deadline is None:
+        return {
+            "label": "Not Set",
+            "badge": "secondary"
+        }
+
+    now = datetime.now()
+
+    if deadline < now:
+        return {
+            "label": "Expired",
+            "badge": "danger"
+        }
+
+    remaining = deadline - now
+
+    if remaining <= timedelta(hours=1):
+        return {
+            "label": "Less than 1 hour left",
+            "badge": "danger"
+        }
+
+    if remaining <= timedelta(hours=5):
+        hours = int(remaining.total_seconds() // 3600)
+
+        return {
+            "label": f"{hours} hour(s) left",
+            "badge": "warning"
+        }
+
+    if remaining <= timedelta(days=1):
+        hours = int(remaining.total_seconds() // 3600)
+
+        return {
+            "label": f"{hours} hour(s) left",
+            "badge": "warning"
+        }
+
+    days = remaining.days
+
+    return {
+        "label": f"{days} day(s) left",
+        "badge": "success"
+    }
 
 # ---------------------------------------------------
 # Create Job
@@ -38,7 +90,10 @@ def create_job(
         required_education=job.required_education,
 
         industry=job.industry,
-        function=job.function
+        function=job.function,
+
+        application_deadline=job.application_deadline,
+        job_link=str(job.job_link) if job.job_link else None
     )
 
     db.add(db_job)
@@ -54,7 +109,7 @@ def create_job(
 
 def get_all_jobs(db, user_id):
 
-    return (
+    jobs = (
         db.query(Job)
         .options(
             joinedload(Job.prediction_result)
@@ -63,6 +118,14 @@ def get_all_jobs(db, user_id):
         .order_by(Job.created_at.desc())
         .all()
     )
+
+    for job in jobs:
+
+        job.deadline_status = get_deadline_status(
+            job.application_deadline
+        )
+
+    return jobs
 
 
 # ---------------------------------------------------
@@ -116,6 +179,13 @@ def update_job(
 
     db_job.industry = job.industry
     db_job.function = job.function
+
+    db_job.application_deadline = job.application_deadline
+    db_job.job_link = (
+        str(job.job_link)
+        if job.job_link
+        else None
+    )
 
     db.commit()
     db.refresh(db_job)

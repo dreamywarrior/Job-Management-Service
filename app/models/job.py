@@ -91,6 +91,18 @@ class Job(Base):
         onupdate=datetime.utcnow
     )
 
+    # Application deadline
+    application_deadline: Mapped[datetime | None] = mapped_column(
+        DateTime,
+        nullable=True
+    )
+
+    # Original job posting URL
+    job_link: Mapped[str | None] = mapped_column(
+        String(500),
+        nullable=True
+    )
+
     owner = relationship(
         "User",
         back_populates="jobs"

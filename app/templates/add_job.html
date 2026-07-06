@@ -110,6 +110,49 @@ name="department">
 
 <div class="col-md-6 mb-3">
 
+    <label class="form-label">
+
+        Application Deadline
+
+    </label>
+
+    <input
+        type="datetime-local"
+        class="form-control"
+        name="application_deadline">
+
+    <div class="form-text">
+
+        Optional. You'll receive reminders as the deadline approaches.
+
+    </div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+    <label class="form-label">
+
+        Job Link
+
+    </label>
+
+    <input
+        type="url"
+        class="form-control"
+        name="job_link"
+        placeholder="https://careers.company.com/job">
+
+    <div class="form-text">
+
+        Optional. Paste the original job posting URL.
+
+    </div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
 <label class="form-label">
 
 Industry
@@ -486,6 +529,27 @@ document.getElementsByName("description")[0],
 valid &= validateSalary(
 document.getElementsByName("salary_range")[0]
 );
+
+const jobLink = document.getElementsByName("job_link")[0];
+
+if(jobLink.value.trim() !== ""){
+
+    try{
+
+        new URL(jobLink.value);
+
+    }
+    catch{
+
+        alert("Please enter a valid Job Link.");
+
+        e.preventDefault();
+
+        return;
+
+    }
+
+}
 
 if(!valid){
 

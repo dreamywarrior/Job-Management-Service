@@ -59,7 +59,7 @@
 
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                   <div class="col-md-6 mb-3">
 
                         <label class="form-label">Department</label>
 
@@ -67,6 +67,55 @@
                             class="form-control"
                             name="department"
                             value="{{ job.department or '' }}">
+
+                    </div>
+
+                    <!-- Application Deadline -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Application Deadline
+
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            class="form-control"
+                            name="application_deadline"
+                            value="{% if job.application_deadline %}{{ job.application_deadline.strftime('%Y-%m-%dT%H:%M') }}{% endif %}">
+
+                        <div class="form-text">
+
+                            Optional. Used for deadline reminders.
+
+                        </div>
+
+                    </div>
+
+                    <!-- Job Link -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Job Link
+
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            name="job_link"
+                            placeholder="https://careers.company.com/job"
+                            value="{{ job.job_link or '' }}">
+
+                        <div class="form-text">
+
+                            Optional. Link to the original job posting.
+
+                        </div>
 
                     </div>
 
@@ -80,7 +129,6 @@
                             value="{{ job.industry or '' }}">
 
                     </div>
-
                     <div class="col-md-6 mb-3">
 
                         <label class="form-label">Function</label>

@@ -198,6 +198,8 @@
 
                     <th>Employment</th>
 
+                    <th>Deadline</th>
+
                     <th>Status</th>
 
                     <th width="240">
@@ -240,7 +242,33 @@
 
                     <td>
 
-                        {{ job.employment_type }}
+                        {{ job.employment_type or "-" }}
+
+                    </td>
+
+                    <td>
+
+                        {% if job.application_deadline %}
+
+                            <small class="d-block">
+
+                                {{ job.application_deadline.strftime("%d %b %Y") }}
+
+                            </small>
+
+                            <small class="text-muted d-block">
+
+                                {{ job.application_deadline.strftime("%I:%M %p") }}
+
+                            </small>
+
+                        {% endif %}
+
+                        <span class="badge bg-{{ job.deadline_status.badge }} mt-1">
+
+                            {{ job.deadline_status.label }}
+
+                        </span>
 
                     </td>
 
@@ -276,6 +304,8 @@
 
                         <div class="btn-group">
 
+                            <!-- View -->
+
                             <a
                                 href="/jobs/{{ job.id }}"
                                 class="btn btn-outline-primary btn-sm"
@@ -285,6 +315,8 @@
 
                             </a>
 
+                            <!-- Edit -->
+
                             <a
                                 href="/jobs/{{ job.id }}/edit"
                                 class="btn btn-outline-warning btn-sm"
@@ -293,6 +325,35 @@
                                 <i class="bi bi-pencil-fill"></i>
 
                             </a>
+
+                            <!-- Predict -->
+
+                            <a
+                                href="/prediction/{{ job.id }}"
+                                class="btn btn-outline-success btn-sm"
+                                title="Run Prediction">
+
+                                <i class="bi bi-search"></i>
+
+                            </a>
+
+                            <!-- Open Job Link -->
+
+                            {% if job.job_link %}
+
+                            <a
+                                href="{{ job.job_link }}"
+                                target="_blank"
+                                class="btn btn-outline-info btn-sm"
+                                title="Open Job Posting">
+
+                                <i class="bi bi-box-arrow-up-right"></i>
+
+                            </a>
+
+                            {% endif %}
+
+                            <!-- Delete -->
 
                             <a
                                 href="/jobs/{{ job.id }}/delete"
@@ -401,7 +462,7 @@ const jobTitle=row.cells[0].innerText.toLowerCase();
 const companyName=row.cells[1].innerText.toLowerCase();
 const jobLocation=row.cells[2].innerText.toLowerCase();
 const jobEmployment=row.cells[3].innerText.toLowerCase();
-const jobStatus=row.cells[4].innerText.toLowerCase();
+const jobStatus=row.cells[5].innerText.toLowerCase();
 
 let visible=true;
 
