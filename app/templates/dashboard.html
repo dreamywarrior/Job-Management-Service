@@ -172,6 +172,21 @@
 
 </div>
 
+<!-- ===================== FRAUD ANALYTICS ===================== -->
+
+<div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h5 class="mb-0">Fraud Analytics</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="fraudChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ===================== QUICK ACTIONS ===================== -->
 
 <div class="card shadow-sm mb-4">
@@ -392,5 +407,30 @@
     </div>
 
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById('fraudChart').getContext('2d');
+    var fraudChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Fake Jobs', 'Legitimate Jobs'],
+            datasets: [{
+                data: [{{ fake_jobs|default(0) }}, {{ legitimate_jobs|default(0) }}],
+                backgroundColor: ['#dc3545', '#198754']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+});
+</script>
 
 {% endblock %}

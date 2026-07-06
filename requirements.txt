@@ -12,3 +12,6 @@ pwdlib
 pwdlib[argon2]
 httpx
 itsdangerous
+pandas
+scikit-learn
+joblib
