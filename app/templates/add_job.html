@@ -1,0 +1,568 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold">
+
+            <i class="bi bi-plus-circle-fill text-success"></i>
+
+            Create New Job
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            Fill in the details below to create a new job posting.
+
+        </p>
+
+    </div>
+
+</div>
+
+<form id="jobForm" action="/jobs/add" method="post">
+
+<!-- ================= BASIC INFORMATION ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-primary text-white">
+
+<h5 class="mb-0">
+
+<i class="bi bi-info-circle-fill"></i>
+
+Basic Information
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Job Title <span class="text-danger">*</span>
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="title"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Company <span class="text-danger">*</span>
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="company"
+required>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Location
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="location">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Department
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="department">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+    <label class="form-label">
+
+        Application Deadline
+
+    </label>
+
+    <input
+        type="datetime-local"
+        class="form-control"
+        name="application_deadline">
+
+    <div class="form-text">
+
+        Optional. You'll receive reminders as the deadline approaches.
+
+    </div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+    <label class="form-label">
+
+        Job Link
+
+    </label>
+
+    <input
+        type="url"
+        class="form-control"
+        name="job_link"
+        placeholder="https://careers.company.com/job">
+
+    <div class="form-text">
+
+        Optional. Paste the original job posting URL.
+
+    </div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Industry
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="industry">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+
+Function
+
+</label>
+
+<input
+type="text"
+class="form-control"
+name="function">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= EMPLOYMENT ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-success text-white">
+
+<h5 class="mb-0">
+
+<i class="bi bi-briefcase-fill"></i>
+
+Employment Details
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Employment Type
+
+</label>
+
+<select
+class="form-select"
+name="employment_type">
+
+<option>Full-time</option>
+
+<option>Part-time</option>
+
+<option>Contract</option>
+
+<option>Temporary</option>
+
+<option>Internship</option>
+
+</select>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Salary Range
+
+</label>
+
+<input
+type="text"
+class="form-control"
+placeholder="50000-70000"
+name="salary_range">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Required Experience
+
+</label>
+
+<input
+class="form-control"
+name="required_experience">
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<label>
+
+Required Education
+
+</label>
+
+<input
+class="form-control"
+name="required_education">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= COMPANY ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-dark text-white">
+
+<h5>
+
+<i class="bi bi-building-fill"></i>
+
+Company Information
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<label>
+
+Company Profile
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="company_profile"></textarea>
+
+</div>
+
+</div>
+
+<!-- ================= JOB DESCRIPTION ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-info text-white">
+
+<h5>
+
+<i class="bi bi-card-text"></i>
+
+Job Description
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="mb-3">
+
+<label>
+
+Description <span class="text-danger">*</span>
+
+</label>
+
+<textarea
+rows="6"
+class="form-control"
+name="description"
+required></textarea>
+
+</div>
+
+<div class="mb-3">
+
+<label>
+
+Requirements
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="requirements"></textarea>
+
+</div>
+
+<div>
+
+<label>
+
+Benefits
+
+</label>
+
+<textarea
+rows="4"
+class="form-control"
+name="benefits"></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= ADDITIONAL ================= -->
+
+<div class="card mb-4 shadow">
+
+<div class="card-header bg-secondary text-white">
+
+<h5>
+
+<i class="bi bi-sliders"></i>
+
+Additional Details
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<div class="form-check mb-3">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="telecommuting"
+value="true">
+
+<label class="form-check-label">
+
+Remote / Telecommuting Available
+
+</label>
+
+</div>
+
+<div class="form-check mb-3">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="has_company_logo"
+value="true">
+
+<label class="form-check-label">
+
+Company Logo Available
+
+</label>
+
+</div>
+
+<div class="form-check">
+
+<input
+class="form-check-input"
+type="checkbox"
+name="has_questions"
+value="true">
+
+<label class="form-check-label">
+
+Screening Questions Included
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= BUTTONS ================= -->
+
+<div class="card shadow sticky-bottom mb-3">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-end gap-3">
+
+<a
+href="/jobs"
+class="btn btn-secondary">
+
+<i class="bi bi-arrow-left"></i>
+
+Cancel
+
+</a>
+
+<button
+class="btn btn-success px-5">
+
+<i class="bi bi-check-circle-fill"></i>
+
+Save Job
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+
+{% endblock %}
+
+<script>
+
+document
+.getElementById("jobForm")
+.addEventListener(
+"submit",
+function(e){
+
+let valid=true;
+
+valid &= validateRequired(
+document.getElementsByName("title")[0],
+"Job Title"
+);
+
+valid &= validateMinLength(
+document.getElementsByName("title")[0],
+5
+);
+
+valid &= validateRequired(
+document.getElementsByName("company")[0],
+"Company"
+);
+
+valid &= validateRequired(
+document.getElementsByName("description")[0],
+"Description"
+);
+
+valid &= validateMinLength(
+document.getElementsByName("description")[0],
+50
+);
+
+valid &= validateSalary(
+document.getElementsByName("salary_range")[0]
+);
+
+const jobLink = document.getElementsByName("job_link")[0];
+
+if(jobLink.value.trim() !== ""){
+
+    try{
+
+        new URL(jobLink.value);
+
+    }
+    catch{
+
+        alert("Please enter a valid Job Link.");
+
+        e.preventDefault();
+
+        return;
+
+    }
+
+}
+
+if(!valid){
+
+e.preventDefault();
+
+return;
+
+}
+
+disableSubmit(
+document.querySelector("button[type='submit']")
+);
+
+});
+
+</script>

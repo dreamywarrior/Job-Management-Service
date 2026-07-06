@@ -1,0 +1,387 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Edit Job
+    </h2>
+
+    <form action="/jobs/{{ job.id }}/edit" method="post">
+
+        <!-- ================= BASIC INFORMATION ================= -->
+
+        <div class="card shadow mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h5 class="mb-0">Basic Information</h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Job Title</label>
+
+                        <input
+                            class="form-control"
+                            name="title"
+                            value="{{ job.title }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Company</label>
+
+                        <input
+                            class="form-control"
+                            name="company"
+                            value="{{ job.company }}"
+                            required>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Location</label>
+
+                        <input
+                            class="form-control"
+                            name="location"
+                            value="{{ job.location or '' }}">
+
+                    </div>
+
+                   <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Department</label>
+
+                        <input
+                            class="form-control"
+                            name="department"
+                            value="{{ job.department or '' }}">
+
+                    </div>
+
+                    <!-- Application Deadline -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Application Deadline
+
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            class="form-control"
+                            name="application_deadline"
+                            value="{% if job.application_deadline %}{{ job.application_deadline.strftime('%Y-%m-%dT%H:%M') }}{% endif %}">
+
+                        <div class="form-text">
+
+                            Optional. Used for deadline reminders.
+
+                        </div>
+
+                    </div>
+
+                    <!-- Job Link -->
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+
+                            Job Link
+
+                        </label>
+
+                        <input
+                            type="url"
+                            class="form-control"
+                            name="job_link"
+                            placeholder="https://careers.company.com/job"
+                            value="{{ job.job_link or '' }}">
+
+                        <div class="form-text">
+
+                            Optional. Link to the original job posting.
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Industry</label>
+
+                        <input
+                            class="form-control"
+                            name="industry"
+                            value="{{ job.industry or '' }}">
+
+                    </div>
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Function</label>
+
+                        <input
+                            class="form-control"
+                            name="function"
+                            value="{{ job.function or '' }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= EMPLOYMENT DETAILS ================= -->
+
+        <div class="card shadow mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h5 class="mb-0">Employment Details</h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Employment Type</label>
+
+                        <select
+                            class="form-select"
+                            name="employment_type">
+
+                            <option value="Full-time"
+                                {% if job.employment_type=="Full-time" %}selected{% endif %}>
+                                Full-time
+                            </option>
+
+                            <option value="Part-time"
+                                {% if job.employment_type=="Part-time" %}selected{% endif %}>
+                                Part-time
+                            </option>
+
+                            <option value="Contract"
+                                {% if job.employment_type=="Contract" %}selected{% endif %}>
+                                Contract
+                            </option>
+
+                            <option value="Temporary"
+                                {% if job.employment_type=="Temporary" %}selected{% endif %}>
+                                Temporary
+                            </option>
+
+                            <option value="Internship"
+                                {% if job.employment_type=="Internship" %}selected{% endif %}>
+                                Internship
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Salary Range</label>
+
+                        <input
+                            class="form-control"
+                            name="salary_range"
+                            value="{{ job.salary_range or '' }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Required Experience</label>
+
+                        <input
+                            class="form-control"
+                            name="required_experience"
+                            value="{{ job.required_experience or '' }}">
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">Required Education</label>
+
+                        <input
+                            class="form-control"
+                            name="required_education"
+                            value="{{ job.required_education or '' }}">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= JOB DESCRIPTION ================= -->
+
+        <div class="card shadow mb-4">
+
+            <div class="card-header bg-info text-white">
+
+                <h5 class="mb-0">Job Description</h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Company Profile
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="3"
+                        name="company_profile">{{ job.company_profile or '' }}</textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Job Description
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="6"
+                        name="description"
+                        required>{{ job.description }}</textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Requirements
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="5"
+                        name="requirements">{{ job.requirements or '' }}</textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Benefits
+                    </label>
+
+                    <textarea
+                        class="form-control"
+                        rows="4"
+                        name="benefits">{{ job.benefits or '' }}</textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= ADDITIONAL INFORMATION ================= -->
+
+        <div class="card shadow mb-4">
+
+            <div class="card-header bg-secondary text-white">
+
+                <h5 class="mb-0">Additional Information</h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="form-check mb-3">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="telecommuting"
+                        value="true"
+                        {% if job.telecommuting %}checked{% endif %}>
+
+                    <label class="form-check-label">
+                        Remote / Telecommuting Available
+                    </label>
+
+                </div>
+
+                <div class="form-check mb-3">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="has_company_logo"
+                        value="true"
+                        {% if job.has_company_logo %}checked{% endif %}>
+
+                    <label class="form-check-label">
+                        Company Logo Available
+                    </label>
+
+                </div>
+
+                <div class="form-check">
+
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        name="has_questions"
+                        value="true"
+                        {% if job.has_questions %}checked{% endif %}>
+
+                    <label class="form-check-label">
+                        Includes Screening Questions
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-end">
+
+            <button class="btn btn-warning btn-lg">
+                Update Job
+            </button>
+
+            <a
+                href="/jobs"
+                class="btn btn-secondary btn-lg">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}
