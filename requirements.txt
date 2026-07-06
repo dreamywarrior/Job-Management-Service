@@ -12,3 +12,4 @@ pwdlib
 pwdlib[argon2]
 httpx
 itsdangerous
+joblib
