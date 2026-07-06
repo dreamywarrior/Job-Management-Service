@@ -13,3 +13,4 @@ pwdlib[argon2]
 httpx
 itsdangerous
 joblib
+sklearn
