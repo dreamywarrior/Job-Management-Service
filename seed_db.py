@@ -3,8 +3,12 @@ from sqlalchemy.orm import Session
 from app.core.database import SessionLocal, engine
 from app.models.user import User
 from app.models.job import Job
+from app.models.prediction_result import PredictionResult
 from app.core.database import Base
 from app.services.prediction_service import predict_job
+from pwdlib import PasswordHash
+
+password_hash = PasswordHash.recommended()
 
 # Dummy job data
 jobs_data = [
@@ -42,18 +46,23 @@ def seed():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     
-    # Check for a user
-    user = db.query(User).first()
-    if not user:
-        print("Creating a dummy user...")
-        user = User(
-            full_name="Test User",
-            email="test@example.com",
-            password_hash="dummy_hash"
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
+    # Wipe existing data to start fresh
+    print("Wiping existing data...")
+    db.query(PredictionResult).delete()
+    db.query(Job).delete()
+    db.query(User).delete()
+    db.commit()
+    
+    print("Creating a test user...")
+    hashed_pwd = password_hash.hash("testpassword")
+    user = User(
+        full_name="Test User",
+        email="test@example.com",
+        password_hash=hashed_pwd
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
     
     print(f"Using user: {user.email} (ID: {user.id})")
     

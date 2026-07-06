@@ -49,6 +49,13 @@ Access the application at `http://127.0.0.1:8000`.
 4. **View Prediction:** You will be routed to the Prediction Result page. The ML model will analyze the text and return a "Fake" or "Legitimate" tag along with a Confidence Score.
 5. **View Analytics:** Navigate to the Dashboard to see the Fraud Analytics pie chart update in real-time based on your prediction history.
 
+### Understanding the Prediction Results
+When reading the prediction results on the UI, it's important to understand how the **Confidence Score** is calculated:
+*   The Machine Learning model always calculates **two** probabilities: the probability that the job is *Fake*, and the probability that the job is *Legitimate* (which always sum to 100%).
+*   The model selects the class with the highest probability and declares that as its final **Prediction**.
+*   The winning probability percentage is then displayed as the **Confidence Score**.
+*   *Example:* If a job returns **Fake (63%)**, it means the model calculated a 63% probability of it being a scam and a 37% probability of it being legitimate. If it returns **Legitimate (61%)**, the model calculated a 61% probability of it being a real job and a 39% probability of it being a scam.
+
 ## 4. System Architecture
 
 The system utilizes a hybrid approach combining **Layered (MVC) Architecture** with **CQRS**:
@@ -110,6 +117,16 @@ Here is a visual flowchart of how the two lanes operate:
     *   The `prediction_service.py` acts as the bridge to the Machine Learning model (`model.pkl`). 
     *   Instead of writing raw data, it queries existing job postings, extracts text features, and passes them to the ML pipeline for read-only inference.
     *   The results are then persisted in a separate `PredictionResult` table, strictly segregating the analytical data from the core `Job` transactional data.
+
+### Justification for Pattern Selection (Why CQRS?)
+The **Command Query Responsibility Segregation (CQRS)** pattern was deliberately chosen for the Machine Learning integration to address strict separation of concerns and system scalability:
+1.  **Asymmetric Workloads:** The Command side (adding a job) is a lightweight, high-frequency CRUD operation. The Query side (predicting fraud) involves loading a serialized Machine Learning model and running computationally expensive text vectorization (TF-IDF) and inference. CQRS ensures these workloads do not bottleneck each other.
+2.  **Data Segregation:** The ML inference results (Fraud vs. Legitimate, Confidence Scores) are analytical data. By segregating the write operations (Job table) from the read/analytics operations (PredictionResult table), we maintain a clean boundary between transactional data and machine learning artifacts.
+
+### Integration Strategy
+To successfully merge the `implementation_version_1` shell with the `implementation_version_2` ML capabilities without causing regressions:
+*   **Loose Coupling:** The ML pipeline (`ml/train_model.py`) was developed entirely independently. The FastAPI application only interfaces with the compiled artifact (`model.pkl`), ensuring the web server is not burdened with model training logic.
+*   **Service Layer Injection:** Rather than modifying the existing `jobs.py` command routes, a completely new `prediction_service.py` was introduced. This service reads from the existing database schema, runs inference, and writes strictly to its own dedicated `PredictionResult` table, ensuring zero disruption to the original Command architecture.
 
 ## 5. Modular Explanation
 
