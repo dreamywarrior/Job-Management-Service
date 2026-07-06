@@ -246,11 +246,29 @@
 
                     <td>
 
-                        <span class="badge bg-warning">
+                        {% if job.prediction_result %}
 
-                            Pending
+                            {% if job.prediction_result.prediction == "Fake" %}
 
-                        </span>
+                                <span class="badge bg-danger">
+                                    Fake
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-success">
+                                    Legitimate
+                                </span>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+
+                        {% endif %}
 
                     </td>
 

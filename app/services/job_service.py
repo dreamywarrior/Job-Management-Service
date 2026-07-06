@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 from app.models.job import Job
 from app.schemas.job import JobCreate
@@ -52,13 +52,13 @@ def create_job(
 # Get All Jobs
 # ---------------------------------------------------
 
-def get_all_jobs(
-    db: Session,
-    user_id: int
-):
+def get_all_jobs(db, user_id):
 
     return (
         db.query(Job)
+        .options(
+            joinedload(Job.prediction_result)
+        )
         .filter(Job.user_id == user_id)
         .order_by(Job.created_at.desc())
         .all()
