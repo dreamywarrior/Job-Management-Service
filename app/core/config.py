@@ -1,1 +1,0 @@
-DATABASE_URL = "sqlite:///./fake_job.db"

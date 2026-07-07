@@ -1,0 +1,27 @@
+flowchart LR
+    User["User / Recruiter"]
+    UI["Streamlit UI Service"]
+    CommandBus["Command Bus"]
+    QueryBus["Query Bus"]
+    PredictionService["Prediction Microservice"]
+    ReportingService["Reporting Microservice"]
+    Pipe["Pipe-and-Filter Flow"]
+    Prep["Preprocessing Filter"]
+    Model["Classifier Filter"]
+    Explain["Explanation Filter"]
+    CSV["CSV Data Source"]
+    Result["Dashboard and Results"]
+
+    User --> UI
+    UI --> CommandBus
+    UI --> QueryBus
+    CSV --> UI
+    CommandBus --> PredictionService
+    QueryBus --> ReportingService
+    PredictionService --> Pipe
+    Pipe --> Prep
+    Prep --> Model
+    Model --> Explain
+    Explain --> Result
+    ReportingService --> Result
+    Result --> UI

@@ -1,1 +1,0 @@
-console.log("Fake Job Detection System Loaded");
