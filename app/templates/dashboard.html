@@ -998,7 +998,7 @@
 
                         <th>Prediction</th>
 
-                        <th>Confidence</th>
+                        <th>Probability</th>
 
                         <th>Risk</th>
 
@@ -1044,7 +1044,15 @@
 
                     <td>
 
-                        {{ prediction.confidence }}%
+                        {% if prediction.prediction == "Fake" %}
+
+                        Chance job is fake: {{ prediction.confidence }}%
+
+                        {% else %}
+
+                        Chance job is legitimate: {{ prediction.confidence }}%
+
+                        {% endif %}
 
                     </td>
 
@@ -1186,7 +1194,15 @@
 
                         <span class="badge bg-primary">
 
-                            {{ job.prediction_result.confidence }}%
+                        {% if job.prediction_result.prediction == "Fake" %}
+
+                        Chance job is fake: {{ job.prediction_result.confidence }}%
+
+                        {% else %}
+
+                        Chance job is legitimate: {{ job.prediction_result.confidence }}%
+
+                        {% endif %}
 
                         </span>
 

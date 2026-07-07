@@ -113,7 +113,7 @@
 
                             <th>Prediction</th>
 
-                            <th>Confidence</th>
+                            <th>Probability</th>
 
                             <th>Date</th>
 
@@ -169,7 +169,15 @@
 
                             <td>
 
-                                {{ "%.2f"|format(item.confidence) }}%
+                                {% if item.prediction == "Fake" %}
+
+                                    Chance job is fake: {{ "%.2f"|format(item.confidence) }}%
+
+                                {% else %}
+
+                                    Chance job is legitimate: {{ "%.2f"|format(item.confidence) }}%
+
+                                {% endif %}
 
                             </td>
 
