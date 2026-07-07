@@ -2,13 +2,125 @@
 
 {% block content %}
 
-<div class="text-center py-5">
+<div class="py-4">
 
-    <h1 class="display-4">
+    <div class="text-center mb-5">
 
-        Welcome, {{ user_name }}
+        <h1 class="display-4 fw-bold">
 
-    </h1>
+            Welcome, {{ user_name }}
+
+        </h1>
+
+        <p class="lead text-muted mt-3 mx-auto" style="max-width:760px;">
+
+            Your workspace is ready. Track job applications, review saved jobs,
+            and check suspicious postings before you spend time on them.
+
+        </p>
+
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+
+            <a href="/dashboard" class="btn btn-primary btn-lg">
+
+                <i class="bi bi-speedometer2 me-2"></i>
+
+                Open Dashboard
+
+            </a>
+
+            <a href="/jobs/add" class="btn btn-outline-primary btn-lg">
+
+                <i class="bi bi-plus-circle me-2"></i>
+
+                Add Job
+
+            </a>
+
+            <a href="/prediction/history" class="btn btn-outline-primary btn-lg">
+
+                <i class="bi bi-graph-up-arrow me-2"></i>
+
+                View Predictions
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <i class="bi bi-briefcase-fill text-primary fs-2"></i>
+
+                    <h5 class="mt-3">Manage Applications</h5>
+
+                    <p class="text-muted mb-0">
+
+                        Keep job details, company information and deadlines in one
+                        organized place.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <i class="bi bi-shield-check text-primary fs-2"></i>
+
+                    <h5 class="mt-3">Detect Risk</h5>
+
+                    <p class="text-muted mb-0">
+
+                        Use prediction results to identify postings that may be
+                        fraudulent or unsafe.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card h-100 border-0 shadow-sm">
+
+                <div class="card-body p-4">
+
+                    <i class="bi bi-clock-history text-primary fs-2"></i>
+
+                    <h5 class="mt-3">Review History</h5>
+
+                    <p class="text-muted mb-0">
+
+                        Revisit previous checks and compare confidence scores when
+                        deciding what to apply for.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

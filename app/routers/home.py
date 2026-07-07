@@ -41,3 +41,25 @@ def welcome(request: Request):
             "user_name": request.session.get("user_name")
         }
     )
+
+
+@router.get("/about")
+def about(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="about.html",
+        context={
+            "title": "About"
+        }
+    )
+
+
+@router.get("/help")
+def help_page(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="help.html",
+        context={
+            "title": "Help"
+        }
+    )
