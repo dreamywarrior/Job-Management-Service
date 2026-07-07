@@ -93,7 +93,9 @@
 
     <div class="container">
 
-        <a class="navbar-brand" href="/">
+        <a
+            class="navbar-brand"
+            href="{% if request.session.get('logged_in') %}/welcome{% else %}/{% endif %}">
 
             <i class="bi bi-shield-check"></i>
 
