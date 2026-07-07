@@ -187,6 +187,14 @@ def update_job(
         else None
     )
 
+    # Editing a job changes the source text, so any old prediction is stale.
+    from app.services.prediction_service import delete_prediction
+
+    delete_prediction(
+        db,
+        db_job.id
+    )
+
     db.commit()
     db.refresh(db_job)
 
