@@ -93,7 +93,9 @@
 
     <div class="container">
 
-        <a class="navbar-brand" href="/">
+        <a
+            class="navbar-brand"
+            href="{% if request.session.get('logged_in') %}/welcome{% else %}/{% endif %}">
 
             <i class="bi bi-shield-check"></i>
 
@@ -156,6 +158,34 @@
                         <i class="bi bi-graph-up-arrow"></i>
 
                         Predictions
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link {% if request.url.path == '/help' %}active{% endif %}"
+                        href="/help">
+
+                        <i class="bi bi-question-circle-fill"></i>
+
+                        Help
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link {% if request.url.path == '/about' %}active{% endif %}"
+                        href="/about">
+
+                        <i class="bi bi-info-circle-fill"></i>
+
+                        About
 
                     </a>
 
@@ -282,6 +312,34 @@
                         <i class="bi bi-person-plus-fill"></i>
 
                         Register
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link {% if request.url.path == '/help' %}active{% endif %}"
+                        href="/help">
+
+                        <i class="bi bi-question-circle-fill"></i>
+
+                        Help
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link {% if request.url.path == '/about' %}active{% endif %}"
+                        href="/about">
+
+                        <i class="bi bi-info-circle-fill"></i>
+
+                        About
 
                     </a>
 

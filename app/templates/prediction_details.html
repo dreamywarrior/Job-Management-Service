@@ -103,13 +103,21 @@
 
                     <h6 class="text-muted">
 
-                        Confidence
+                        Probability
 
                     </h6>
 
                     <h4>
 
-                        {{ "%.2f"|format(prediction.confidence) }}%
+                        {% if prediction.prediction == "Fake" %}
+
+                        Chance job is fake: {{ "%.2f"|format(prediction.confidence) }}%
+
+                        {% else %}
+
+                        Chance job is legitimate: {{ "%.2f"|format(prediction.confidence) }}%
+
+                        {% endif %}
 
                     </h4>
 

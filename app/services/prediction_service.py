@@ -44,18 +44,30 @@ except Exception as e:
 # RISK LEVEL
 # ============================================================
 
-def calculate_risk_level(confidence: float):
+def calculate_risk_level(
+    prediction: str,
+    confidence: float
+):
 
-    if confidence < 50:
-        return "Low"
+    if prediction == "Legitimate":
+        if confidence >= 90:
+            return "Low"
 
-    if confidence < 70:
+        if confidence >= 75:
+            return "Low"
+
         return "Medium"
 
-    if confidence < 85:
+    if confidence >= 90:
+        return "Very High"
+
+    if confidence >= 75:
         return "High"
 
-    return "Very High"
+    if confidence >= 55:
+        return "Medium"
+
+    return "Low"
 
 
 # ============================================================
@@ -174,6 +186,7 @@ def predict_job(
             2
         )
 
+
     # --------------------------------------------------------
     # Fallback
     # --------------------------------------------------------
@@ -192,12 +205,13 @@ def predict_job(
             2
         )
 
-    risk_level = calculate_risk_level(
-        confidence
-    )
-
     explanation = generate_explanation(
         job
+    )
+
+    risk_level = calculate_risk_level(
+        prediction,
+        confidence
     )
 
     existing_prediction = (
